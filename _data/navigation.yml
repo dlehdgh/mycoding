@@ -1,0 +1,22 @@
+navbar:
+  - name: home
+    url: /
+    icon: fa-solid fa-house-chimney
+  - name: about
+    url: /about/
+    icon: fa-sharp fa-solid fa-circle-info
+  - name: posts
+    url: /posts/
+    icon: fa-solid fa-blog
+  - name: year-archive
+    url: /year-archive/
+    icon: fa-solid fa-calendar
+  - name: categories
+    url: /categories/
+    icon: fas fa-folder-open
+  - name: tags
+    url: /tags/
+    icon: fa-solid fa-tag
+  - name: testing
+    url: /testing/
+    icon: fa-solid fa-universal-access

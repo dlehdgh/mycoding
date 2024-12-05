@@ -1,0 +1,42 @@
+label:
+  home: 홈
+  about: 소개
+  posts: 포스트
+  year-archive: 연도 아카이브
+  categories: 카테고리
+  tags: 태그
+  testing: 접근성 테스트
+  search: 검색
+  skip_content: 본문 바로가기
+  skip_navigation: 주메뉴 바로가기
+  navbar_toggler: 토글 메뉴
+  recent_posts: 최근 포스트
+  toc: 목차
+  author: 작성자
+  updated: 작성일
+  read_time: 예상 읽기 시간
+  less_than: 최대
+  minute_read: 분 소요
+  words: 단어
+  share: 공유
+  facebook: 페이스북
+  twitter: 트위터
+  linkedin: 링크드인
+  naver: 네이버
+  kakaostory: 카카오스토리
+  related_posts: 관련글
+  prev_post: 이전 글 
+  next_post: 다음 글
+  prev_page: 이전 페이지
+  next_page: 다음 페이지
+  first_page: 첫번째 페이지
+  last_page: 마지막 페이지
+  year: 연도 # 연도 아카이브의 바로가기 링크에 사용
+  total_posts: 개의 글
+  more: 더보기
+  go_back: 뒤로
+  go_top: 맨위로
+  tag_cloud: 태그 클라우드
+  no_search: 검색결과가 없습니다.
+  copy_url: URL 복사
+  print: 인쇄
