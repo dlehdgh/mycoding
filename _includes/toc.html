@@ -1,0 +1,55 @@
+{%- comment -%}
+* '<h'로 나누어 제목 태그를 구별
+* 'no_toc' 클레스가 있는 제목 태그는 제외한다.
+* 첫번째 자리의 글자가 1 ~ 6인지 체크한뒤 id와 텍스트 추출
+{%- endcomment %}
+<aside class="toc card border-secondary{% if page.toc_sticky %} sticky-md-top{% endif %}">
+	<div class="card-header text-bg-secondary">
+		<i class="fas fa-server" aria-hidden="true"></i> {{ site.data.ui-text.label.toc }}
+	</div>
+	<ul class="toc-list">
+	{% assign nodes = include.html | strip | split: '<h' -%}
+	{% assign minHeader = 1 -%}
+	{% assign maxHeader = 6 -%}
+	{% assign firstHeader = true -%}
+	{% assign currLevel = 0 -%}
+	{% assign lastLevel = 0 -%}
+	{% for node in nodes -%}
+		{% if node == "" -%}
+			{% continue -%}
+		{% endif -%}
+		{% assign currLevel = node | replace: '"', '' | slice: 0, 1 | times: 1 -%}
+		{% if currLevel < minHeader or currLevel > maxHeader -%}
+			{% continue -%}
+		{% endif -%}
+		{% if firstHeader -%}
+			{% assign minHeader = currLevel %}
+		{% endif -%}
+		{% assign hTag = node | split: '</h' -%}
+		{% assign hTagId = hTag[0] | split: 'id="' -%}
+		{% assign hTagId = hTagId[1] | split: '"' -%}
+		{% assign hTagText = hTagId[1] | split: '>' -%}
+		{% assign hTagClass = hTag[0] | split: 'class="' -%}
+		{% assign hTagClass = hTagClass[1] | split: '"' -%}
+		{% if hTagClass[0] contains "no_toc" -%}
+			{% continue -%}
+		{% endif -%}
+		{% if lastLevel > 0 -%}
+			{% if currLevel > lastLevel -%}
+				<ul>
+			{% else -%}
+				</li>
+			{% endif -%}
+		{% elsif currLevel < lastLevel -%}
+			{% assign repeatCount = lastLevel | minus: currLevel -%}
+			{% for i in (1..repeatCount) -%}
+				</li></ul>
+			{% endfor -%}
+			</li>
+		{% endif -%}
+		<li><a href="#{{ hTagId[0] }}" class="list-group-item-action">{{ hTagText[1] }}</a>
+		{% assign lastLevel = currLevel %}
+		{% assign firstHeader = false %}
+	{%- endfor -%}
+	</li></ul>
+</aside>
