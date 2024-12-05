@@ -1,0 +1,14 @@
+{%- assign content = include.content | default: page.content -%}
+{% assign words_per_minute = page.words_per_minute | default: site.words_per_minute | default: 200 -%}
+{% assign words = content | strip_html | number_of_words -%}
+<i class="fa-regular fa-clock" aria-hidden="true"></i>
+<span class="visually-hidden">{{ site.data.ui-text.label.read_time }}:</span>
+<span>
+	{%- if words < words_per_minute -%}
+		{{ site.data.ui-text.label.less_than }} 1{{ site.data.ui-text.label.minute_read }}
+	{%- elsif words == words_per_minute -%}
+		1{{ site.data.ui-text.label.minute_read }}
+	{%- else -%}
+		{{ words | divided_by: words_per_minute | append: site.data.ui-text.label.minute_read }}
+	{%- endif -%}
+</span>
