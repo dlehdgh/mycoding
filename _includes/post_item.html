@@ -1,0 +1,17 @@
+{%- assign post = include.post -%}
+<div class="post-item">
+	<h3 class="post-title">
+		<a href="{{ include.post.url | relative_url | replace: '//', '/' }}">{{ include.post.title }}</a>
+	</h3>
+	<small class="post-meta">
+		{% if include.post.date -%}
+		{% include datetime.html date=include.post.date format=site.date_format %}
+		{%- endif %}
+		{% include read_time.html content=include.post.content %}
+		{% if include.post.categories -%}
+		<i class="fas fa-folder-open" aria-hidden="true"></i>
+		<span class="visually-hidden">{{ site.data.ui-text.label.categories }}:</span>
+		<span>{{ include.post.categories | map: 'capitalize' | join: ', ' }}</span>
+		{%- endif %}
+	</small>
+</div>
