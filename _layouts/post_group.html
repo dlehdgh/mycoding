@@ -1,0 +1,77 @@
+---
+layout: default
+---
+
+{%- comment -%}
+- group_by: "tags"
+  icon: "fa-solid fa-tag"
+- group_by: "categories"
+  icon: "fas fa-folder-open"
+- group_by:
+    - "year" # %Y
+    - "month" # %m
+    - "day" # %d
+  icon: "fa-solid fa-calendar"
+{%- endcomment -%}
+
+{% assign idx_title = 0 -%}
+{% assign idx_items = 1 -%}
+{%- case page.group_by -%}
+	{%- when "categories" -%}
+		{%- assign posts = site.categories -%}
+		{% assign icon = "fas fa-folder-open" -%}
+	{%- when "tags" -%}
+		{%- assign posts = site.tags -%}
+		{% assign icon = "fa-solid fa-tag" -%}
+	{% when "year" or "month" or "day" -%}
+		{%- if page.group_by == "year" -%}
+			{%- assign date_format = "%Y" -%}
+		{% else -%}
+			{%- assign date_format = page.group_by | split: "" | first | prepend: "%" -%}
+		{% endif -%}
+		{% assign posts = site.posts | where_exp: "item", "item.hidden != true" | group_by_exp: 'post', 'post.date | date: date_format' -%}
+		{% assign idx_title = "name" -%}
+		{% assign idx_items = "items" -%}
+		{% assign icon = "fa-solid fa-calendar" -%}
+{% endcase -%}
+
+<ul class="nav-skip">
+	{%- for item in posts -%}
+		<li>
+			<a href="#{{ item[idx_title] | slugify }}" class="btn btn-primary">
+				<strong>
+					<i class="{{ icon }}" aria-hidden="true"></i> {{ item[idx_title] | capitalize }}
+				</strong>
+				<span class="badge text-bg-light">{{ item[idx_items].size }}</span>
+			</a>
+		</li>
+	{% endfor -%}
+</ul>
+
+{%- for item in posts -%}
+	{% assign items = item[idx_items] -%}
+	<article class="page-content">
+		<h3 id="{{ item[idx_title] | slugify }}">{{ item[idx_title] | capitalize }}</h3>
+		{%- assign my_float = site.paginate | times: 1.0 -%}
+		{% assign total_page = items | size | divided_by: my_float | ceil -%}
+		{% assign index = 1 -%}
+		{% assign count = 0 -%}
+		<div class="post-group" data-page="{{ index }}">
+		{% for post in items -%}
+			{% include post_item.html post=post %}
+			{% assign count = count | plus: 1 -%}
+			{% if count == site.paginate and forloop.index < items.size -%}
+				{% assign index = index | plus: 1 -%}
+				{% assign count = 0 -%}
+				</div>
+				<div class="post-group" data-page="{{ index }}">
+			{% endif -%}
+		{% endfor -%}
+		</div>
+		{% if total_page > 1 -%}
+			<button type="button" class="btn btn-primary btn-more" data-page="2" aria-label="{{ item[idx_title] | capitalize }} {{ site.data.ui-text.label.more }}">
+				{{ site.data.ui-text.label.more }} <i aria-hidden="true">&rarr;</i>
+			</button>
+		{% endif -%}
+	</article>
+{% endfor -%}
