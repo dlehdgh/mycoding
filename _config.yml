@@ -1,0 +1,97 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+#
+# If you need help with YAML syntax, here are some quick references for you:
+# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
+# https://learnxinyminutes.com/docs/yaml/
+#
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+title: 나도코딩
+email: dlehdgh2@naver.com
+description: >- # "baseurl:"이 나올 때까지 줄 바꿈을 무시함
+  이 블로그는 내가 공부했던 내용들을 나중에 찾아보기 쉽도록 정리해서 올릴 예정이다.
+  주로 프로그레밍 언어에 대한 글을 올릴 예정이다.
+author: dlehdgh
+baseurl: "mycoding" # 사이트의 하위 경로, e.g. /blog
+url: "https://dlehdgh.github.io" # 사이트의 기본 호스트 이름 및 프로토콜, e.g. http://example.com
+permalink: /:categories/:title/ # 포스트 주소 e.g. /:categories/:year/:month/:day/:title:output_ext
+
+# 포스트 날짜가 UTC 날짜 보다 미래인 경우에도 허용
+future: true
+
+# 날짜 형식 지정(년.월.일 시:분:초 AM/PM)
+date_format: "%Y.%m.%d"
+date_time_format: "%Y.%m.%d %I:%M"
+
+# Github Utterances 댓글 설정
+utterances:
+  repo: dlehdgh/mycoding # 댓글을 추가할 저장소
+  issue-term: pathname # 댓글 추가 시 issue의 제목 유형
+  theme: github-dark-orange # 댓글 테마
+
+github_username:  dlehdgh
+facebook_username: 
+twitter_username: 
+
+# Build settings
+theme: minima
+
+# 마크다운 설정
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+
+# 페이지 나누기 설정
+paginate: 10
+paginate_path: "/posts/page:num/"
+paginate_size: 5
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-sitemap
+
+# Tipue Search 환경설정
+tipue_search:
+  include:
+    pages: false
+    collections: []
+  exclude:
+    files: [search.html, index.html, 404.html, categories/index.md, tags.md, year-archive.md, testing.md]
+    categories: []
+    tags: []
+
+
+# Exclude from processing.
+# The following items will not be processed, by default.
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+#
+# exclude:
+#   - .sass-cache/
+#   - .jekyll-cache/
+#   - gemfiles/
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules/
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
