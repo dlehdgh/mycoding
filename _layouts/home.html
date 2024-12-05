@@ -1,0 +1,47 @@
+---
+layout: default
+---
+
+<header class="page-header">
+	<h2 class="page-title">{{ site.title }}</h2>
+	{% if site.description -%}
+		<div class="subheading mb-3">{{ site.description }}</div>
+	{% endif -%}
+</header>
+
+{{ content }}
+
+<article class="page-content">
+	<h2>{{ site.data.ui-text.label.recent_posts }}</h2>
+	<p><strong class="text-primary">{{ site.posts | size | default: '0' }}</strong>{{ site.data.ui-text.label.total_posts }}</p>
+	{% for post in site.posts limit: 5 -%}
+		{% include post_item.html post=post %}
+	{% endfor -%}
+	<!-- <a href="{{ site.paginate_path | replace_first: '/', '' | split: '/' | first | prepend: '/' | relative_url }}/" class="btn btn-primary" aria-label="{{ site.data.ui-text.label.posts }} {{ site.data.ui-text.label.more }}"> -->
+	<a href="{{ '/posts/' | relative_url }}/" class="btn btn-primary" aria-label="{{ site.data.ui-text.label.posts }} {{ site.data.ui-text.label.more }}">
+		{{ site.data.ui-text.label.more }} <i aria-hidden="true">&rarr;</i>
+	</a>
+</article>
+
+<article class="page-content">
+	<h2>{{ site.data.ui-text.label.tag_cloud }}</h2>
+	<div class="tag-cloud">
+		{%- capture tags -%}
+			{% for tag in site.tags -%}
+				{%- if tag[1].size > 1 -%}
+				{{ tag[1].size | plus: 1000 }}#{{ tag[0] }}#{{ tag[1].size }}{%- unless forloop.last -%}|{%- endunless %}
+				{%- endif -%}
+			{% endfor -%}
+		{% endcapture -%}
+		{% assign tags = tags | split: "|" | sort | reverse -%}
+		{% assign path_type = '#' -%}
+		{% for tag in tags -%}
+			{% assign item = tag | split: "#" -%}
+			{%- assign tag_url = item[1] | slugify %}
+			<a href="{{ '/tags/' | append: path_type | append: tag_url | relative_url }}" class="btn btn-outline-primary rounded-pill m-1" aria-description="{{ site.data.ui-text.label.tags }}" rel="tag">
+				<i class="fas fa-tags" aria-hidden="true"></i> {{ item[1] }}
+				<span class="badge text-bg-light">{{ item[2] }}</span>
+			</a>
+		{%- endfor %}
+	</div>
+</article>

@@ -1,0 +1,87 @@
+---
+layout: default
+---
+
+<article class="page-content">
+	{%- if page.toc -%}
+		{% include toc.html html=content %}
+	{% endif -%}
+	{{ content | toc }}
+</article>
+
+{% include creative-commons.html %}
+
+<footer class="page-meta">
+	{%- assign path_type = '#' -%}
+	{% assign meta = 'btn btn-outline-primary btn-sm' -%}
+	{% if page.categories -%}
+	<p class="page-taxonomy">
+		<strong>
+			<i class="fas fa-folder-open" aria-hidden="true"></i> {{ site.data.ui-text.label.categories }}: 
+		</strong>
+		{% for category in page.categories -%}
+			{% assign category_url = category | slugify -%}
+			<a href="{{ '/categories/' | append: path_type | append: category_url | relative_url }}" class="{{ meta }}" rel="tag">{{ category | capitalize }}</a>
+		{% endfor -%}
+	</p>
+	{% endif -%}
+	{% if page.tags -%}
+	<p class="page-taxonomy">
+		<strong>
+			<i class="fas fa-tags" aria-hidden="true"></i> {{ site.data.ui-text.label.tags }}: 
+		</strong>
+		{% for tag in page.tags -%}
+			{% assign tag_url = tag | slugify -%}
+			<a href="{{ '/tags/' | append: path_type | append: tag_url | relative_url }}" class="{{ meta }}" rel="tag">{{ tag | capitalize }}</a>
+		{% endfor -%}
+	</p>
+	{%- endif -%}
+</footer>
+
+{% assign btn_share = 'btn btn-link share-' -%}
+<article class="page-share mb-2">
+	<strong>
+		<i class="fa-sharp fa-solid fa-share-nodes" aria-hidden="true"></i> {{ site.data.ui-text.label.share }}: 
+	</strong>
+	<button type="button" class="{{ 'facebook' | prepend: btn_share }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ site.data.ui-text.label.facebook }} {{ site.data.ui-text.label.share }}" aria-label="{{ site.data.ui-text.label.facebook }} {{ site.data.ui-text.label.share }}">
+		<i class="fa-brands fa-square-facebook fa-2x" style="color: #3b5998;" aria-hidden="true"></i>
+	</button>
+	<button type="button" class="{{ 'twitter' | prepend: btn_share }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ site.data.ui-text.label.twitter }} {{ site.data.ui-text.label.share }}" aria-label="{{ site.data.ui-text.label.twitter }} {{ site.data.ui-text.label.share }}">
+		<i class="fa-brands fa-square-twitter fa-2x" style="color: #55acee;" aria-hidden="true"></i>
+	</button>
+	<button type="button" class="{{ 'linkedin' | prepend: btn_share }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ site.data.ui-text.label.linkedin }} {{ site.data.ui-text.label.share }}" aria-label="{{ site.data.ui-text.label.linkedin }} {{ site.data.ui-text.label.share }}">
+		<i class="fa-brands fa-linkedin fa-2x" style="color: #0082ca;" aria-hidden="true"></i>
+	</button>
+	<button type="button" class="{{ 'naver' | prepend: btn_share }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ site.data.ui-text.label.naver }} {{ site.data.ui-text.label.share }}" aria-label="{{ site.data.ui-text.label.naver }} {{ site.data.ui-text.label.share }}">
+		<i class="fa fa-square-n fa-2x" aria-hidden="true"></i>
+	</button>
+	<button type="button" class="{{ 'kakaostory' | prepend: btn_share }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ site.data.ui-text.label.kakaostory }} {{ site.data.ui-text.label.share }}" aria-label="{{ site.data.ui-text.label.kakaostory }} {{ site.data.ui-text.label.share }}">
+		<i class="fa fa-square-k fa-2x" aria-hidden="true"></i>
+	</button>
+</article>
+<hr>
+
+<nav class="pagination d-flex justify-content-between">
+	{%- assign paginate_class = 'btn btn-primary' -%}
+	{% if page.previous.url -%}
+		<a href="{{ page.previous.url | relative_url | replace: '//', '/' }}" class="{{ paginate_class }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ page.previous.title }}" aria-description="{{ page.previous.title }}">
+			<i aria-hidden="true">&larr;</i> {{ site.data.ui-text.label.prev_post | default: "Previous" }}
+		</a>
+	{% else -%}
+		<span class="{{ paginate_class }} disabled">
+			<i aria-hidden="true">&larr;</i> {{ site.data.ui-text.label.prev_post | default: "Previous" }}
+		</span>
+	{% endif -%}
+	{% if page.next.url -%}
+		<a href="{{ page.next.url | relative_url | replace: '//', '/' }}" class="{{ paginate_class }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ page.next.title }}" aria-description="{{ page.next.title }}">
+			{{ site.data.ui-text.label.next_post | default: "Next" }} <i aria-hidden="true">&rarr;</i>
+		</a>
+	{% else -%}
+		<span class="{{ paginate_class }} disabled">
+			{{ site.data.ui-text.label.next_post | default: "Next" }} <i aria-hidden="true">&rarr;</i>
+		</span>
+	{% endif -%}
+</nav>
+<hr>
+
+{% include utterances.html %}

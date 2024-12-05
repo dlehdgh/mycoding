@@ -1,0 +1,10 @@
+---
+layout: default
+---
+
+<article class="page-content">
+	{%- if page.toc -%}
+		{% include toc.html html=content %}
+	{% endif -%}
+	{{ content }}
+</article>
