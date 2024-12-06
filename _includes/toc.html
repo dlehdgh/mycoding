@@ -3,12 +3,14 @@
 * 'no_toc' 클레스가 있는 제목 태그는 제외한다.
 * 첫번째 자리의 글자가 1 ~ 6인지 체크한뒤 id와 텍스트 추출
 {%- endcomment %}
+
+{% assign nodes = include.html | strip | split: '<h' -%}
+{% if node.size > 1 %}
 <aside class="toc card border-secondary{% if page.toc_sticky %} sticky-md-top{% endif %}">
 	<div class="card-header text-bg-secondary">
 		<i class="fas fa-server" aria-hidden="true"></i> {{ site.data.ui-text.label.toc }}
 	</div>
 	<ul class="toc-list">
-	{% assign nodes = include.html | strip | split: '<h' -%}
 	{% assign minHeader = 1 -%}
 	{% assign maxHeader = 6 -%}
 	{% assign firstHeader = true -%}
@@ -53,3 +55,4 @@
 	{%- endfor -%}
 	</li></ul>
 </aside>
+{%- endif %}
