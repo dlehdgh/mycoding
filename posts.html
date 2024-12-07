@@ -1,0 +1,81 @@
+---
+layout: page
+permalink: /posts/
+---
+
+<p><strong class="text-primary">{{ site.posts | size | default: '0' }}</strong>{{ site.data.ui-text.label.total_posts }}</p>
+{% for post in paginator.posts -%}
+	{% include post_item.html post=post %}
+{% endfor %}
+
+<!-- Pagination -->
+<ul class="pagination">
+	{%- assign page_link = "page-link" -%}
+	{% assign first_page = 1 -%}
+	{% assign last_page = site.paginate_size -%}
+	{% if paginator.page > last_page -%}
+		{% assign first_page = paginator.page | minus: 1 | divided_by: site.paginate_size | floor | times: site.paginate_size | plus: 1 -%}
+		{% assign last_page = first_page | plus: site.paginate_size -%}
+	{% endif -%}
+	{% if last_page > paginator.total_pages -%}
+		{% assign last_page = paginator.total_pages -%}
+	{%- endif -%}
+	<li class="page-item">
+		{%- assign first_path = site.paginate_path | replace_first: '/', '' | split: '/' | first | prepend: '/' | append: '/' | relative_url -%}
+		{% if paginator.previous_page -%}
+			<a href="{{ site.paginate_path | split: 'page' | first | relative_url }}" class="{{ page_link }}" aria-label="{{ site.data.ui-text.label.pagination_first | default: 'First' }}">
+				<i class="fa fa-angles-left" aria-hidden="true"></i>
+			</a>
+		{% else -%}
+			<span class="{{ page_link }} disabled" aria-label="{{ site.data.ui-text.label.pagination_first | default: 'First' }}">
+				<i class="fa fa-angles-left" aria-hidden="true"></i>
+			</span>
+		{%- endif -%}
+	</li>
+	<li class="page-item">
+		{% if paginator.previous_page -%}
+			<a href="{{ paginator.previous_page_path | relative_url }}" class="{{ page_link }}" aria-label="{{ site.data.ui-text.label.pagination_previous | default: 'Previous' }}">
+				<i class="fas fa-angle-left" aria-hidden="true"></i>
+			</a>
+		{% else -%}
+			<span class="{{ page_link }} disabled" aria-label="{{ site.data.ui-text.label.pagination_previous | default: 'Previous' }}">
+				<i class="fas fa-angle-left" aria-hidden="true"></i>
+			</span>
+		{% endif -%}
+	</li>
+	{% for i in (first_page..last_page) -%}
+		<li class="page-item">
+		{% if i == paginator.page -%}
+			<span class="{{ page_link }} active" aria-current="page">{{ i }}</span>
+		{% elsif i == 1 -%}
+			{% comment -%}<a href="{{ first_path }}" class="{{ page_link }}">{{ i }}</a>{%- endcomment %}
+			<a href="{{ paginator.previous_page_path | relative_url }}" class="{{ page_link }}">{{ i }}</a>
+		{% else -%}
+			<a href="{{ site.paginate_path | relative_url | replace: ':num', i }}" class="{{ page_link }}">{{ i }}</a>
+		{%- endif -%}
+		</li>
+	{%- endfor -%}
+	<li class="page-item">
+		{% if paginator.next_page -%}
+			<a href="{{ paginator.next_page_path | relative_url }}" class="{{ page_link }}" aria-label="{{ site.data.ui-text.label.pagination_next | default: 'Next' }}">
+				<i class="fas fa-angle-right"></i>
+			</a>
+		{% else -%}
+			<span class="{{ page_link }} disabled" aria-label="{{ site.data.ui-text.label.pagination_next | default: 'Next' }}">
+				<i class="fas fa-angle-right"></i>
+			</span>
+		{%- endif -%}
+	</li>
+	<li class="page-item">
+		{%- assign last_path = site.paginate_path | replace: ":num", paginator.total_pages | relative_url -%}
+		{% if paginator.next_page -%}
+			<a href="{{ last_path }}" class="{{ page_link }}" aria-label="{{ site.data.ui-text.label.pagination_last | default: 'Last' }}">
+				<i class="fa fa-angles-right" aria-hidden="true"></i>
+			</a>
+		{% else -%}
+			<span class="{{ page_link }} disabled" aria-label="{{ site.data.ui-text.label.pagination_last | default: 'Last' }}">
+				<i class="fa fa-angles-right" aria-hidden="true"></i>
+			</span>
+		{%- endif -%}
+	</li>
+</ul>
