@@ -18,7 +18,7 @@ layout: default
 		{% include post_item.html post=post %}
 	{% endfor -%}
 	<!-- <a href="{{ site.paginate_path | replace_first: '/', '' | split: '/' | first | prepend: '/' | relative_url }}/" class="btn btn-primary" aria-label="{{ site.data.ui-text.label.posts }} {{ site.data.ui-text.label.more }}"> -->
-	<a href="{{ '/posts/' | relative_url }}/" class="btn btn-primary" aria-label="{{ site.data.ui-text.label.posts }} {{ site.data.ui-text.label.more }}">
+	<a href="{{ '/posts/' | relative_url }}" class="btn btn-primary" aria-label="{{ site.data.ui-text.label.posts }} {{ site.data.ui-text.label.more }}">
 		{{ site.data.ui-text.label.more }} <i aria-hidden="true">&rarr;</i>
 	</a>
 </article>
